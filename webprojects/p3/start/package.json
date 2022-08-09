@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "gsap": "^3.10.4",
-    "mathjs": "^10.6.1"
+    "lodash": "^4.17.21",
+    "mathjs": "^10.6.4"
   }
 }

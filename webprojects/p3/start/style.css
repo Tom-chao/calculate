@@ -15,6 +15,8 @@
 
   --span-size: 100px;
   --gap-size: calc(var(--span-size) / 3);
+  --column-gap-size: var(--gap-size);
+  --row-gap-size: calc(var(--gap-size) * 4/ 5);
   --dark-calculator-background-shadow:
     25px 25px 75px rgba(0, 0, 0, 0.25),
     10px 10px 70px rgba(0, 0, 0, 0.25),
@@ -95,4 +97,207 @@
   --clear-before-background-linear: linear-gradient(120deg, var(--clear-color), var(--transition-color));
   --delete-before-background-linear: linear-gradient(120deg, var(--delete-color), var(--transition-color));
   --equal-before-background-linear: linear-gradient(120deg, var(--equal-color), var(--transition-color));
+}
+
+/* 初始化 */
+*,
+*::before,
+*::after {
+  /* 位置 */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* 布局 */
+  /* 修饰-字体 */
+  font-family: monospace;
+  color: var(--dark-primary-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* 修饰-样式 */
+  text-decoration: none;
+  list-style: none;
+  text-align: center;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+html,
+body{
+  /* 位置 */
+  width: 100vw;
+  min-height: 100vh;
+  /* 布局 */
+  display: grid;
+  place-items: center;
+  /* 修饰 */
+  background: var(--dark-primary-color);
+}
+/* 显示屏 */
+.calculator{
+  /* 位置 */
+  position: relative;
+  max-width: 1200px;
+  min-width: 300px;
+  min-height: 400px;
+  /* 布局 */
+  display: grid;
+  grid-template-columns: repeat(1,4fr);
+  grid-template-rows: 120px repeat(5,1fr);
+  column-gap: var(--column-gap-size);
+  row-gap: var(--row-gap-size);
+  /* 修饰 */
+  padding: 60px;
+  border-radius: 20px;
+  box-shadow: var(--dark-calculator-background-shadow);
+  text-shadow: var(--dark-text-shadow);
+}
+/* 换肤区 */
+.toggle{
+  /* 位置 */
+  position: absolute;
+  top: 0;
+  right: 0;
+  /* 布局 */
+  display: grid;
+  place-items: center;
+  /* 修饰 */
+  
+}
+.toggle img{
+  /* 位置 */
+  position: relative;
+  width: var(--image-size);
+  height: var(--image-size);
+  top: calc(var(--image-size)/2);
+  right: calc(var(--image-size)/2);
+  /* 布局 */
+  /* 修饰 */
+  padding: 10px;
+  border-radius: 5px;
+}
+.toggle img:nth-child(1){
+  display: block;
+  filter: invert(1);
+  box-shadow: var(--light-image-shadow);
+}
+.toggle img:nth-child(1):active{
+  box-shadow: var(--light-image-active-shadow);
+}
+.toggle img:nth-child(2){
+  display: none;
+  box-shadow: var(--dark-image-shadow);
+}
+.toggle img:nth-child(2):active{
+  box-shadow: var(--dark-image-active-shadow);
+}
+/* 内容区 */
+#textarea{
+   /* 位置 */
+  position: relative;
+  width: var(--text-area-width);
+  /* 布局--本层 */
+  grid-column: span 4;
+  /* 布局--下层 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* 修饰 */
+  border: none;
+  border-radius: 10px;
+  background: var(--screen-color);
+  box-shadow: var(--text-area-screen-shadow);
+}
+#textarea input{
+  /* 位置 */
+  position: absolute;
+  width: 100%;
+  /* 修饰--整体 */
+  padding: 0 10px;
+  background: none;
+  border: none;
+  /* 修饰--字体 */
+  font-family: 'Chakra';
+  font-size: 3rem;
+  line-height: 1rem;
+  /* 修饰--特性 */
+  outline: none;
+}
+#textarea input:nth-child(1){
+  opacity: 0;
+  display: none;
+}
+/* 键盘区 */
+.calculator span{
+  /* 位置 */
+  position: relative;
+  width: var(--span-size);
+  height: var(--span-size);
+  /* 布局 */
+  display: grid;
+  place-items: center;
+  /* 修饰--整体 */
+  background: var(--dark-span-background-linear);
+  box-shadow: var(--dark-span-shadow);
+  /* 修饰--边框 */
+  border-radius: 10px;
+  /* 修饰--特性 */
+  cursor: pointer;
+}
+.calculator span.mousedown{
+  transform: translateY(3px);
+  box-shadow: var(--span-mousedown-shadow);
+}
+.calculator span#clear{
+  grid-column: span 2;
+  width: 100%;
+  background: var(--clear-deep-color);
+}
+.calculator span#plus{
+  grid-row: span 2;
+  height: 100%;
+}
+.calculator span#delete{
+  background: var(--delete-deep-color);
+}
+.calculator span#equal{
+  background: var(--equal-deep-color);
+}
+
+/* 按键字体 */
+.calculator span::before{
+  /* 位置 */
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  bottom: 10px;
+  right: 12px;
+  /* 布局 */
+  display: grid;
+  place-items: center;
+  /* 修饰--整体 */
+  background: var(--dark-span-before-background-linear);
+  /* 修饰--字体 */
+  color: var(--light-primary-color);
+  font-size: 2rem;
+  text-transform: uppercase;
+  /* 修饰--边框 */
+  border-top: var(--dark-span-before-border);
+  border-bottom: var(--dark-span-before-border);
+  border-left: var(--dark-span-before-border);
+  box-shadow: var(--dark-span-before-box-shadow);
+  border-radius: 10px;
+  /* 修饰--特性 */
+  content: '';
+}
+.calculator span#clear::before{
+  background: var(--clear-before-background-linear);
+  border: none;
+}
+.calculator span#delete::before{
+  background: var(--delete-before-background-linear);
+  border: none;
+}
+.calculator span#equal::before{
+  background: var(--equal-before-background-linear);
+  border: none;
 }
